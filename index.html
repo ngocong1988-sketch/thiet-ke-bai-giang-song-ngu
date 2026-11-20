@@ -1,0 +1,17 @@
+function exportToWord() {
+  // Tự động dò tìm khung chứa kết quả bài dạy trên giao diện
+  const contentElement = document.getElementById('result-content') 
+                      || document.getElementById('rendered-output') 
+                      || document.getElementById('output-content')
+                      || document.querySelector('.prose')
+                      || document.querySelector('#result-area div.bg-white');
+
+  if (!contentElement || !contentElement.innerText.trim()) {
+    alert('Chưa có nội dung giáo án/phiếu bài tập để xuất file!');
+    return;
+  }
+
+  // Tự động lấy tên bài học từ ô nhập liệu (dù id là gì)
+  const lessonInput = document.getElementById('lesson-name') || document.querySelector('input[type="text"]');
+  const rawTitle = lessonInput && lessonInput.value.trim() ? lessonInput.value.trim() : 'Ke_Hoach_Bai_Day_5512';
+  const safeFileName = rawTitle.replace(/[^a-zA-Z0-9\u00C0-\u1EF9\s_-]/g, '').replace(/\s+/g, '_') + '.doc';
